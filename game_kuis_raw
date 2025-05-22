@@ -1,0 +1,123 @@
+import java.util.Scanner;
+
+public class StatRStudioQuiz {
+    private static class Question {
+        String question;
+        String[] options;
+        int answer; // 1-based index of correct option
+
+        Question(String question, String[] options, int answer) {
+            this.question = question;
+            this.options = options;
+            this.answer = answer;
+        }
+    }
+
+    public static void main(String[] args) {
+        Question[] questions = new Question[] {
+            new Question("Fungsi apa yang digunakan dalam R untuk menghitung rata-rata?", new String[] {
+                "median()", "mean()", "sum()", "sd()"
+            }, 2),
+
+            new Question("Apa tujuan fungsi sd() di R?", new String[] {
+                "Menghitung median", "Menghitung variansi", "Menghitung standar deviasi", "Menghitung jumlah data"
+            }, 3),
+
+            new Question("Manakah dari berikut yang merupakan tipe data dasar di R?", new String[] {
+                "vector", "matrix", "data.frame", "semua benar"
+            }, 4),
+
+            new Question("Fungsi apa yang digunakan untuk melihat 6 baris pertama dari dataset di R?", new String[] {
+                "head()", "tail()", "summary()", "str()"
+            }, 1),
+
+            new Question("Manakah paket R yang digunakan untuk visualisasi grafik?", new String[] {
+                "dplyr", "ggplot2", "tidyr", "shiny"
+            }, 2),
+
+            new Question("Apa output dari function summary() pada data frame di R?", new String[] {
+                "Rata-rata tiap variabel", "Ringkasan statistik tiap variabel", "Jumlah data", "Format data frame"
+            }, 2),
+
+            new Question("Dalam statistik, apa itu p-value?", new String[] {
+                "Ukuran kekuatan sampel", "Probabilitas hipotesis nol benar", "Probabilitas hasil terjadi jika hipotesis nol benar", "Mean sampel"
+            }, 3),
+
+            new Question("Fungsi apa dalam R untuk mengimport file CSV?", new String[] {
+                "read.csv()", "load.csv()", "import.csv()", "open.csv()"
+            }, 1),
+
+            new Question("Termasuk tipe distribusi probabilitas berikut kecuali:", new String[] {
+                "Distribusi Normal", "Distribusi Eksponensial", "Distribusi Linier", "Distribusi Poisson"
+            }, 3),
+
+            new Question("Apa fungsi dari t-test dalam statistik?", new String[] {
+                "Mengukur korelasi", "Menguji dua rata-rata berbeda secara signifikan", "Menghitung varians", "Menampilkan grafik"
+            }, 2),
+
+            new Question("Dalam R, fungsi apa untuk membuat grafik scatter plot?", new String[] {
+                "scatter()", "plot()", "graph()", "chart()"
+            }, 2),
+
+            new Question("Apa yang digunakan untuk memanipulasi data frame di R secara efisien?", new String[] {
+                "ggplot2", "dplyr", "shiny", "caret"
+            }, 2),
+
+            new Question("Apa yang dilakukan fungsi filter() di paket dplyr?", new String[] {
+                "Memilih kolom", "Memilih baris berdasarkan kondisi", "Menggabungkan data frame", "Menghitung statistik dasar"
+            }, 2),
+
+            new Question("Apa fungsi dari fungsi set.seed() di R?", new String[] {
+                "Menyetel nilai acak agar reproduktif", "Menghitung mean", "Mengurutkan data", "Membuat grafik"
+            }, 1),
+
+            new Question("Output dari fungsi str() di R adalah untuk:", new String[] {
+                "Menampilkan struktur objek", "Menghitung jumlah data", "Merangkum statistik", "Menghapus NA"
+            }, 1),
+
+        };
+
+        Scanner scanner = new Scanner(System.in);
+        int score = 0;
+
+        System.out.println("Quiz Statistika dan Komputasi RStudio");
+        System.out.println("=====================================");
+
+        for (int i = 0; i < questions.length; i++) {
+            Question q = questions[i];
+            System.out.printf("\n%d. %s%n", i + 1, q.question);
+            for (int j = 0; j < q.options.length; j++) {
+                System.out.printf("%c) %s%n", 'a' + j, q.options[j]);
+            }
+
+            char userAnswer = ' ';
+            boolean valid = false;
+            while (!valid) {
+                System.out.print("Jawaban anda (a-d): ");
+                String input = scanner.nextLine().trim().toLowerCase();
+                if (input.length() == 1) {
+                    userAnswer = input.charAt(0);
+                    if (userAnswer >= 'a' && userAnswer <= 'd') {
+                        valid = true;
+                    }
+                }
+                if (!valid) {
+                    System.out.println("Input tidak valid. Silakan masukkan huruf a, b, c, atau d.");
+                }
+            }
+
+            int userIndex = userAnswer - 'a' + 1;
+            if (userIndex == q.answer) {
+                System.out.println("Benar!");
+                score++;
+            } else {
+                System.out.printf("Salah! Jawaban yang benar adalah: %s%n", q.options[q.answer - 1]);
+            }
+        }
+
+        System.out.println("\nQuiz selesai!");
+        System.out.printf("Skor anda: %d dari %d%n", score, questions.length);
+
+        scanner.close();
+    }
+}
